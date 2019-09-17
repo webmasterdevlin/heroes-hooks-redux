@@ -1,20 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHeroById, setHero, updateHero } from "../hero-actions";
-import useReactRouter from "use-react-router";
 
-export default function EditHero() {
-  /*can be manually created using useContext and Router Context*/
-  const { match, history } = useReactRouter();
-
+export default function EditHero(params) {
   /*part of Redux pattern*/
   const dispatch = useDispatch();
-  const { hero } = useSelector(state => state.heroReducer);
+  const { hero, isLoading } = useSelector(state => state.heroReducer);
 
   /*basic React*/
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    dispatch(fetchHeroById(match.params.id));
+    dispatch(fetchHeroById(params.id));
   }, []);
 
   const handleInputChange = ({ currentTarget: input }) => {
@@ -31,12 +27,33 @@ export default function EditHero() {
   };
 
   const handleBackButton = () => {
-    history.goBack();
+  window.history.back();
   };
 
   return (
     <>
       <h2>Edit Hero</h2>
+         {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center"
+          }}
+        >
+          <div
+            className="spinner-border"
+            style={{
+              width: "9rem",
+              height: "9rem",
+              color: "purple"
+            }}
+            role="status"
+          >
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      ) : (
       <div className="card my-3" style={{ width: "auto" }}>
         <form className="card-header" onSubmit={handleSubmit}>
           <section className="d-flex flex-row">
@@ -96,7 +113,7 @@ export default function EditHero() {
             Back
           </button>
         </form>
-      </div>
+      </div>)}
       {isSuccess && (
         <div className="alert alert-success col-md-3" role="alert">
           This hero has been updated!

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NewItemForm from "../../shared/components/NewItemForm";
-import { Link } from "react-router-dom";
+import {Link,} from "@reach/router";
 import {
   removeVillain,
   fetchVillains,

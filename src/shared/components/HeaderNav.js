@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import {Link,} from "@reach/router";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 
@@ -41,9 +41,9 @@ export default function HeaderNav() {
       >
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/">
+            <Link className="nav-link" to="/">
               Heroes
-            </NavLink>
+            </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/villains">

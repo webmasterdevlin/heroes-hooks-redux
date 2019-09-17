@@ -1,24 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import useReactRouter from "use-react-router";
+
 import {
   fetchVillainById,
   setVillain,
   updateVillain
 } from "../villain-actions";
 
-export default function EditVillain() {
-  /*can be manually created using useContext and Router Context*/
-  const { match, history } = useReactRouter();
-
+export default function EditVillain(params) {
   /*part of Redux pattern*/
   const dispatch = useDispatch();
-  const { villain } = useSelector(state => state.villainReducer);
+  const { villain, isLoading  } = useSelector(state => state.villainReducer);
 
   /*basic React*/
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    dispatch(fetchVillainById(match.params.id));
+    dispatch(fetchVillainById(params.id));
   }, []);
 
   const handleInputChange = ({ currentTarget: input }) => {
@@ -35,12 +32,33 @@ export default function EditVillain() {
   };
 
   const handleBackButton = () => {
-    history.goBack();
+   window.history.back();
   };
 
   return (
     <>
       <h2>Edit Villain</h2>
+        {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center"
+          }}
+        >
+          <div
+            className="spinner-border"
+            style={{
+              width: "9rem",
+              height: "9rem",
+              color: "purple"
+            }}
+            role="status"
+          >
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      ) : (
       <div className="card my-3" style={{ width: "auto" }}>
         <form className="card-header" onSubmit={handleSubmit}>
           <section className="d-flex flex-row">
@@ -100,7 +118,7 @@ export default function EditVillain() {
             Back
           </button>
         </form>
-      </div>
+      </div>)}
       {isSuccess && (
         <div className="alert alert-success col-md-3" role="alert">
           This villain has been updated!

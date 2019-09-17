@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import NewItemForm from "../../shared/components/NewItemForm";
 import { removeHero, fetchHeroes, addHero, setHero } from "../hero-actions";
-import { Link } from "react-router-dom";
+import {Link,} from "@reach/router";
 
 export default function Heroes() {
   /*part of Redux pattern*/
